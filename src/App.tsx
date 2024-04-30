@@ -1,4 +1,4 @@
-import Button from "./components/atoms/button"
+import Button from "./components/atoms/Button"
 
 const App = () => {
   const test = () => {
@@ -10,8 +10,8 @@ const App = () => {
       <Button
         size="md"
         onClick={test}
-        color="Primary"
-        disabled={false}>
+        color="primary"
+        type="submit">
         Hola Mundo
       </Button>
     </>

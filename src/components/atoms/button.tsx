@@ -1,28 +1,46 @@
-import { ButtonProp } from "src/utils//button.type"
+import { ReactNode } from "react"
 
 //Approach due to TAilwind do not support dynamic classnames
 //https://tailwindcss.com/docs/content-configuration#dynamic-class-names
-const variants: { [key: string]: string } = {
-  Primary: "bg-[#79968E] hover:bg-[#658179]",
-  Secondary: "bg-[#B5BAC5] hover:bg-[#656E81]",
+const variants: Record<string, string> = {
+  primary: "bg-[#79968E] hover:bg-[#658179]",
+  secondary: "bg-[#B5BAC5] hover:bg-[#656E81]",
 }
 
-const sizes: { [key: string]: string } = {
+const sizes: Record<string, string> = {
   md: "py-2 px-4",
 }
 
-const Button = (props: ButtonProp) => {
+export interface ButtonProp
+  extends React.DetailedHTMLProps<
+    React.ButtonHTMLAttributes<HTMLButtonElement>,
+    HTMLButtonElement
+  > {
+  size: keyof typeof sizes
+  onClick: () => void
+  children: ReactNode
+  color: keyof typeof variants
+  disabled?: boolean
+  styles?: string
+}
+
+const Button = ({
+  color,
+  size,
+  styles,
+  disabled = false,
+  onClick,
+  children,
+  ...rest
+}: ButtonProp) => {
   return (
-    <>
-      <button
-        className={`${variants[props.color]} text-white font-bold ${sizes[props.size]} rounded`}
-        disabled={props.disabled}
-        onClick={(e: React.MouseEvent<HTMLElement>) => {
-          props.onClick(e)
-        }}>
-        {props.children}
-      </button>
-    </>
+    <button
+      className={`${variants[color]}  text-white font-bold ${sizes[size]} rounded ${styles}`}
+      disabled={disabled}
+      onClick={onClick}
+      {...rest}>
+      {children}
+    </button>
   )
 }
 
